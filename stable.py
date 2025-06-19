@@ -2,27 +2,38 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 import os.path
+import json
 
 DEBUG = False
 
-DATA_FILE = "./data.txt"
+DATA_FILE = "./data.json"
 SYMBOLS_PATH = "./symbols/"
-DEFAULT_SYMBOLS  = "dot\ndash\nletter_separator\nword_separator"
+DEFAULT_FILE = "./default.json"
+
+TWITCH_FILE_NAME = "twitch.json"
+DISCORD_FILE_NAME = "discord.json"
+
+with open(DEFAULT_FILE, "r") as f:
+        DEFAULT_SYMBOLS = json.load(f)
+f.close()
+
 CHARACTER_LIMIT = 2000
 
 ENCODE_TWITCH = "twitch_encode"
 ENCODE_DISCORD = "discord_encode"
+
+ENCODE = "encode"
 DECODE = "decode"
 
 with open(DATA_FILE, "r") as f:
-        l = [line.rstrip() for line in f]
+        data = json.load(f)
 f.close()
 
-TOKEN_STABLE = l[0]
-TOKEN_DEBUG  = l[1]
+TOKEN_STABLE = data['token_stable']
+TOKEN_DEBUG  = data['token_debug']
 
-DEBUG_SERVER_ID = l[2]
-ALLOWED_SERVER_IDS = l[3:]
+DEBUG_SERVER_ID = data['debug_server_id']
+ALLOWED_SERVER_IDS = data['allowed_server_ids']
 
 symbols_dict = {}
 
@@ -86,8 +97,14 @@ decode_dict = {
     "/"     : " "
 }
 
+def remove_multiple_white_spaces(txt: str) -> str:
+    while "  " in txt:
+        txt = txt.replace("  ", " ")
+    return txt
+
 def encode_msg(msg: str, twitch: bool, guild_id: int) -> str:
     if msg == "": return "Can't encode empty message."
+    msg = remove_multiple_white_spaces(msg)
     msg = msg.lower()
     result_string = ""
     i = 0
@@ -102,29 +119,56 @@ def encode_msg(msg: str, twitch: bool, guild_id: int) -> str:
             result_string += " " + used_to_dict[" "]
         i+=1
 
+    result_string = result_string.strip()
+
+    if result_string[:2] == "- ": result_string = "\\" + result_string
+
+    #result_string = remove_multiple_white_spaces(result_string)
+
     return result_string
 
 def decode_msg(msg: str, guild_id: int) -> str:
     if msg == "": return "Can't decode empty message."
+    msg = remove_multiple_white_spaces(msg)
     result_string = ""
     current_letter_morse = ""
     symbol_list = msg.split(" ")
-
     used_from_dict = symbols_dict[guild_id][DECODE]
+    regular_morse = True
+
+    #print(msg)
+
+    for symbol in msg:
+        if symbol not in [".", "-", " ", "/"]:
+            regular_morse = False
+            break
+
+    #print(regular_morse)
+
+    if regular_morse:
+        for symbol in symbol_list:
+            
+            if symbol == "":
+                continue
+            #print(result_string)
+            result_string += decode_dict[symbol]
+        return result_string
 
     for symbol in symbol_list:
+        if symbol == "":
+            continue    
 
         if (symbol == symbols_dict[guild_id][ENCODE_TWITCH][" "]) or (symbol == symbols_dict[guild_id][ENCODE_TWITCH]["/"]) or (symbol == symbols_dict[guild_id][ENCODE_DISCORD][" "]) or (symbol == symbols_dict[guild_id][ENCODE_DISCORD]["/"]):
+            #print(current_letter_morse)
             result_string += decode_dict[current_letter_morse]
             current_letter_morse = ""
 
             if (symbol == symbols_dict[guild_id][ENCODE_TWITCH]["/"]) or (symbol == symbols_dict[guild_id][ENCODE_DISCORD]["/"]): result_string += " "
             continue
         
-        if symbol == "": continue
-
         if symbol not in used_from_dict:
             return f"Can't decode message because it contains un-assigned symbol: {symbol}"
+        
         current_letter_morse += used_from_dict[symbol]
     
     if (current_letter_morse != ""): result_string += decode_dict[current_letter_morse]
@@ -138,11 +182,11 @@ def update_raycode(morse: str, new_raycode: str, twitch: bool, guild_id: int) ->
 
     if twitch:
         used_to_dict = symbols_dict[guild_id][ENCODE_TWITCH]        
-        savefile_path = SYMBOLS_PATH + str(guild_id) + "/twitch.txt"
+        savefile_path = SYMBOLS_PATH + str(guild_id) + "/" + TWITCH_FILE_NAME
 
     else:
         used_to_dict = symbols_dict[guild_id][ENCODE_DISCORD]
-        savefile_path = SYMBOLS_PATH + str(guild_id) + "/discord.txt"
+        savefile_path = SYMBOLS_PATH + str(guild_id) + "/" + DISCORD_FILE_NAME
 
     used_from_dict = symbols_dict[guild_id][DECODE]
 
@@ -151,11 +195,15 @@ def update_raycode(morse: str, new_raycode: str, twitch: bool, guild_id: int) ->
     used_to_dict[morse] = new_raycode
     used_from_dict[new_raycode] = morse
 
+    inv_used_to_dict = {v: k for k, v in used_to_dict.items()}
+
+    temp_dict = {
+        ENCODE : used_to_dict,
+        DECODE : inv_used_to_dict
+    }
+
     with open(savefile_path, "w") as f:
-        f.write(used_to_dict["."] + "\n")
-        f.write(used_to_dict["-"] + "\n")
-        f.write(used_to_dict[" "] + "\n")
-        f.write(used_to_dict["/"])
+        f.write(json.dumps(temp_dict, indent=4))
     f.close()
 
     return 0
@@ -196,57 +244,35 @@ for allowed_id in ALLOWED_SERVER_IDS:
     guild_id = discord.Object(id=allowed_id)
 
     server_dir   = SYMBOLS_PATH + str(allowed_id) + "/"
-    twitch_file  = server_dir + "twitch.txt"
-    discord_file = server_dir + "discord.txt"
+    twitch_file  = server_dir + TWITCH_FILE_NAME
+    discord_file = server_dir + DISCORD_FILE_NAME
 
     if(not os.path.isdir(server_dir)):
         os.mkdir(server_dir)
 
     if(not os.path.isfile(twitch_file)):
         with open(twitch_file, "x") as f:
-            f.write(DEFAULT_SYMBOLS)
+            f.write(json.dumps(DEFAULT_SYMBOLS, indent=4))
         f.close()
 
     with open(twitch_file, "r") as f:
-        l = [line.rstrip() for line in f]
+        twitch_dicts = json.load(f)
     f.close()
 
-    encode_dict_twitch = {
-    "." : l[0],
-    "-" : l[1],
-    " " : l[2],
-    "/" : l[3]
-    }
-
-    decode_dict_twitch = {
-        l[0] : ".",
-        l[1] : "-",
-        l[2] : " ",
-        l[3] : "/"
-    }
+    encode_dict_twitch = twitch_dicts[ENCODE]
+    decode_dict_twitch = twitch_dicts[DECODE]
 
     if(not os.path.isfile(discord_file)):
         with open(discord_file, "x") as f:
-            f.write(DEFAULT_SYMBOLS)
+            f.write(json.dumps(DEFAULT_SYMBOLS, indent=4))
         f.close()
 
     with open(discord_file, "r") as f:
-        l = [line.rstrip() for line in f]
+        discord_dicts = json.load(f)
     f.close()
 
-    encode_dict_discord = {
-    "." : l[0],
-    "-" : l[1],
-    " " : l[2],
-    "/" : l[3]
-    }
-
-    decode_dict_discord = {
-        l[0] : ".",
-        l[1] : "-",
-        l[2] : " ",
-        l[3] : "/"
-    }
+    encode_dict_discord = discord_dicts[ENCODE]
+    decode_dict_discord = discord_dicts[DECODE]
 
     server_symbol_dict = {
         ENCODE_TWITCH  : encode_dict_twitch,
