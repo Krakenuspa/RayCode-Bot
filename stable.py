@@ -136,30 +136,17 @@ def decode_msg(msg: str, guild_id: int) -> str:
     used_from_dict = symbols_dict[guild_id][DECODE]
     regular_morse = True
 
-    #print(msg)
-
-    for symbol in msg:
-        if symbol not in [".", "-", " ", "/"]:
-            regular_morse = False
-            break
-
-    #print(regular_morse)
-
-    if regular_morse:
-        for symbol in symbol_list:
-            
-            if symbol == "":
-                continue
-            #print(result_string)
-            result_string += decode_dict[symbol]
-        return result_string
-
     for symbol in symbol_list:
+        if regular_morse and (symbol in decode_dict):
+            result_string += decode_dict[symbol]
+            continue
+        else:
+            regular_morse = False
+
         if symbol == "":
             continue    
 
         if (symbol == symbols_dict[guild_id][ENCODE_TWITCH][" "]) or (symbol == symbols_dict[guild_id][ENCODE_TWITCH]["/"]) or (symbol == symbols_dict[guild_id][ENCODE_DISCORD][" "]) or (symbol == symbols_dict[guild_id][ENCODE_DISCORD]["/"]):
-            #print(current_letter_morse)
             result_string += decode_dict[current_letter_morse]
             current_letter_morse = ""
 
@@ -342,7 +329,17 @@ for allowed_id in ALLOWED_SERVER_IDS:
         else:
             await send_error_msg(interaction, error)
 
+    ### Error Handling ↓ ###
+
+    @client.event
+    async def on_command_error(ctx, error):
+        if isinstance(error, discord.ext.commands.errors.CommandNotFound):
+            return
+        raise error
+
     if(DEBUG): break
+
+    
 
 if DEBUG: client.run(TOKEN_DEBUG)
 else: client.run(TOKEN_STABLE)
