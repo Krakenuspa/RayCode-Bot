@@ -123,8 +123,6 @@ def encode_msg(msg: str, twitch: bool, guild_id: int) -> str:
 
     if result_string[:2] == "- ": result_string = "\\" + result_string
 
-    #result_string = remove_multiple_white_spaces(result_string)
-
     return result_string
 
 def decode_msg(msg: str, guild_id: int) -> str:
