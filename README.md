@@ -1,10 +1,10 @@
-# RayCode Discord Bot
+<h1>RayCode Discord Bot</h1>
 
-## What does it do
+<h2>What does it do</h2>
 <p>This bot is a morse code translator but you replace the default symbols like dots and dashes with your own custom text (i.e. discord/twitch emotes).</p>
 <p>WARNING: Although the bot can decode regular morse code, since I had to include spaces between custom texts, it can't encode into regular morse cause of the extra spaces.</p>
 
-## How to setup
+<h2>How to setup</h2>
 <p>This git repo doesn't include very important file which is "data.env.secret" which you have to make yourself. this file includes 4 env variables that you will need to make this bot run</p>
 <p>NOTE: If you're not interested in having debug test version of the bot. You can make both tokens same and both server ids same and the bot should work fine.</p>
 <dl>
@@ -15,9 +15,8 @@
 </dl>
 <p>In order to get discord app tokens, go to discord developer website. As for discord server ids, enable developer mode in your account settings and then you can copy id of any server you're in.</p>
 
-## How to use
+<h2>How to use</h2>
 <p>Once you get the code running succesfully, there will be 7 commands at your disposal, , and </p>
-<p>WARNING: Make sure to restrict this bot's change cmds otherwise anyone on your server could mess with those.</p>
 <h3>3 User-Level Commands</h3>
 <dl>
   <dt>/encode_discord</dt><dd>Encodes given message using custom morse alphabet intended for DISCORD</dd>
@@ -25,8 +24,8 @@
   <dt>/decode</dt><dd>Decodes a message from ALL: discord morse, twitch morse, and regular morse</dd>
 </dl>
 <h3>4 Admin-Level Commands</h3>
-<p>NOTE: The change commmands have two variables except the new symbol, twitch and discord, only those alphabets set to True will be updated</p>
-<p>WARNING: The new symbols can't include a space, cause of the space being the separator between the symbols themselves. The bot will stop you from doing so but still, heads up.</p>
+<p>NOTE: The change commmands have two variables except the new symbol, twitch and discord, only those alphabets set to True will be updated. The new symbols can't include a space.</p>
+<p>WARNING: Make sure to restrict this bot's change cmds otherwise anyone on your server could mess with those.</p>
 <dl>
   <dt>/change_dot_text</dt><dd>Changes text for DOT in selected alphabets</dd>
   <dt>/change_dash_text</dt><dd>Changes text for DASH in selected alphabets</dd>
@@ -34,5 +33,5 @@
   <dt>/change_word_separator</dt><dd>Changes text for WORD SEPARATOR in selected alphabets</dd>
 </dl>
 
-## Origin
+<h2>Origin</h2>
 <p>Got a sudden realization that emotes could be used for communication and in excitement wrote this bot. This was a brief passion project was original designed for weathergirlray who you can find at https://www.twitch.tv/weathergirlray</p>
