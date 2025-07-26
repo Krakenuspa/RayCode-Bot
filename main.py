@@ -99,42 +99,50 @@ async def decode(interaction: discord.Interaction, message: str):
         await interaction.response.send_message(decoded_msg, ephemeral=True)
 
 @client.tree.command(name="change_dot_text", description="Update text for dot in RayCode", guild=discord.Object(GUILD_ID))
-async def change_dot_text(interaction: discord.Interaction, new_text: str, twitch: bool = False):
-    error = active_raycode.update_symbol(".", new_text, twitch = twitch, discord = not twitch)
-    if twitch: platform = "Twitch"
-    else: platform = "Discord"
+async def change_dot_text(interaction: discord.Interaction, new_text: str, discord: bool = False, twitch: bool = False):
+    if not discord and not twitch:
+        await interaction.response.send_message(f"Please select at least one platform as True", ephemeral=True)
+        return
+    error = active_raycode.update_symbol(".", new_text, twitch = twitch, discord = discord)
+    
     if error == 0:
-        await interaction.response.send_message(f"Dot in RayCode {platform}, from now on, will be: {new_text}", ephemeral=True)
+        await interaction.response.send_message(f"Dot in RayCode, from now on, will be: {new_text}", ephemeral=True)
     else:
         await send_error_msg(interaction, error)
 
 @client.tree.command(name="change_dash_text", description="Update text for dash in RayCode", guild=discord.Object(GUILD_ID))
-async def change_dash_text(interaction: discord.Interaction, new_text: str, twitch: bool = False):
-    error = active_raycode.update_symbol("-", new_text, twitch = twitch, discord = not twitch)
-    if twitch: platform = "Twitch"
-    else: platform = "Discord"
+async def change_dash_text(interaction: discord.Interaction, new_text: str, discord: bool = False, twitch: bool = False):
+    if not discord and not twitch:
+        await interaction.response.send_message(f"Please select at least one platform as True", ephemeral=True)
+        return
+    error = active_raycode.update_symbol("-", new_text, twitch = twitch, discord = discord)
+    
     if error == 0:
-        await interaction.response.send_message(f"Dash in RayCode {platform}, from now on, will be: {new_text}", ephemeral=True)
+        await interaction.response.send_message(f"Dash in RayCode, from now on, will be: {new_text}", ephemeral=True)
     else:
         await send_error_msg(interaction, error)
 
 @client.tree.command(name="change_letter_separator", description="Update text for letter seperator in RayCode", guild=discord.Object(GUILD_ID))
-async def change_letter_seperator(interaction: discord.Interaction, new_text: str, twitch: bool = False):
-    error = active_raycode.update_symbol(" ", new_text, twitch = twitch, discord = not twitch)
-    if twitch: platform = "Twitch"
-    else: platform = "Discord"
+async def change_letter_seperator(interaction: discord.Interaction, new_text: str, discord: bool = False, twitch: bool = False):
+    if not discord and not twitch:
+        await interaction.response.send_message(f"Please select at least one platform as True", ephemeral=True)
+        return
+    error = active_raycode.update_symbol(" ", new_text, twitch = twitch, discord = discord)
+    
     if error == 0:
-        await interaction.response.send_message(f"Letter separator in RayCode {platform}, from now on, will be: {new_text}", ephemeral=True)
+        await interaction.response.send_message(f"Letter separator in RayCode, from now on, will be: {new_text}", ephemeral=True)
     else:
         await send_error_msg(interaction, error)
 
 @client.tree.command(name="change_word_separator", description="Update text for word seperator in RayCode", guild=discord.Object(GUILD_ID))
-async def change_word_seperator(interaction: discord.Interaction, new_text: str, twitch: bool = False):
-    error = active_raycode.update_symbol("/", new_text, twitch = twitch, discord = not twitch)
-    if twitch: platform = "Twitch"
-    else: platform = "Discord"
+async def change_word_seperator(interaction: discord.Interaction, new_text: str, discord: bool = False, twitch: bool = False):
+    if not discord and not twitch:
+        await interaction.response.send_message(f"Please select at least one platform as True", ephemeral=True)
+        return
+    error = active_raycode.update_symbol("/", new_text, twitch = twitch, discord = discord)
+    
     if error == 0:
-        await interaction.response.send_message(f"Word separator in RayCode {platform}, from now on, will be: {new_text}", ephemeral=True)
+        await interaction.response.send_message(f"Word separator in RayCode, from now on, will be: {new_text}", ephemeral=True)
     else:
         await send_error_msg(interaction, error)
 
