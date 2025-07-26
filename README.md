@@ -6,6 +6,7 @@
 
 ## How to use
 <p>This git repo doesn't include very important file which is "data.env.secret" which you have to make yourself. this file includes 4 env variables that you will need to make this bot run</p>
+<p>NOTE: If you're not interested in having debug test version of the bot. You can make both tokens same and both server ids same and the bot should work fine.</p>
 <dl>
   <dt>TOKEN_STABLE</dt><dd>TOKEN_STABLE is token for your discord bot, make sure to never show this to anyone you don't trust since it can be used to make your bot run any code</dd>
   <dt>TOKEN_DEBUG</dt><dd>TOKEN_DEBUG is same as TOKEN_STABLE but this one is used if you enable DEBUG variable inside the main.py file, mostly used to test changes.</dd>
