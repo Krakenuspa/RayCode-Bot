@@ -16,4 +16,4 @@
 <p>In order to get discord app tokens, go to discord developer website. As for discord server ids, enable developer mode in your account settings and then you can copy id of any server you're in.</p>
 
 ## Origin
-<p>This was a brief passion project was original designed for [weathergirlray](https://www.twitch.tv/weathergirlray). Got a realization that emotes could be used for communication and in excitement wrote this bot.</p>
+<p>Got a sudden realization that emotes could be used for communication and in excitement wrote this bot. This was a brief passion project was original designed for weathergirlray who you can find at https://www.twitch.tv/weathergirlray</p>
