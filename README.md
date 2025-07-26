@@ -15,7 +15,7 @@
 </dl>
 <p>In order to get discord app tokens, go to discord developer website. As for discord server ids, enable developer mode in your account settings and then you can copy id of any server you're in.</p>
 
-# How to use
+## How to use
 <p>Once you get the code running succesfully, there will be 7 commands at your disposal, , and </p>
 <p>WARNING: Make sure to restrict this bot's change cmds otherwise anyone on your server could mess with those.</p>
 ### 3 User-Level Commands
