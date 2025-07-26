@@ -29,9 +29,6 @@ if USED_TOKEN == None: raise Exception("Env variable not provided: TOKEN_DEBUG o
 DISCORD_CHARACTER_LIMIT: int = int(getenv('DISCORD_CHARACTER_LIMIT', 2000))
 TWITCH_CHARACTER_LIMIT: int = int(getenv('TWITCH_CHARACTER_LIMIT', 500))
 
-
-
-
 async def send_error_msg(interaction: discord.Interaction, error_id: int) -> None:
     match(error_id):
         case -1: await interaction.response.send_message(f"RayCode symbol can't be nothing, RayCode wasn't updated", ephemeral=True)
@@ -59,17 +56,7 @@ intents.message_content = True
 client = Client(command_prefix = '!', intents = intents)
 active_raycode = raycode(GUILD_ID)
 
-    ### COMMANDS ↓ ###
-
-#@client.tree.command(name="encode", description=f"Encodes text into RayCode", guild=discord.Object(GUILD_ID))
-#async def encode(interaction: discord.Interaction, message: str, twitch: bool = False):
-#    if twitch: encoded_msg = active_raycode.encode_twitch(message)
-#    else: encoded_msg = active_raycode.encode_discord(message)
-#
-#    if len(encoded_msg) > DISCORD_CHARACTER_LIMIT:
-#        await interaction.response.send_message("Encoded message is longer than allowed length of discord msg (2K characters)", ephemeral=True)
-#    else:
-#        await interaction.response.send_message(encoded_msg, ephemeral=True)
+### COMMANDS ↓ ###
 
 @client.tree.command(name="encode_discord", description=f"Encodes text into RayCode", guild=discord.Object(GUILD_ID))
 async def encode_discord(interaction: discord.Interaction, message: str):
@@ -149,7 +136,7 @@ async def change_word_seperator(interaction: discord.Interaction, new_text: str,
 ### Error Handling ↓ ###
 @client.event
 async def on_command_error(_, error: commands.CommandError):
-    if isinstance(error, commands.errors.CommandNotFound):
+    if isinstance(error, commands.errors.CommandNotFound): # Avoids throwing an error into output when someone posts "!" at the beginning of their message
         return
     raise error
 
