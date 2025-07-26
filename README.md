@@ -5,7 +5,7 @@
 <p>WARNING: Although the bot can decode regular morse code, since I had to include spaces between custom texts, it can't encode into regular morse cause of the extra spaces.</p>
 
 <h2>How to setup</h2>
-<p>Download all files from this git repo and place them wherever you want (in one folder). This repo doesn't include very important file which is "data.env.secret" which you have to make yourself. this file includes 4 env variables that you will need to make this bot run</p>
+<p>Download all files from this git repo and place them wherever you want (in one folder). This repo doesn't include very important file which is "data.env.secret" which you have to make yourself. this file includes 4 env variables that you will need to make this bot run:</p>
 <p>NOTE: If you're not interested in having debug test version of the bot. You can make both tokens same and both server ids same and the bot should work fine.</p>
 <dl>
   <dt>TOKEN_STABLE</dt><dd>TOKEN_STABLE is token for your discord bot, make sure to never show this to anyone you don't trust since it can be used to make your bot run any code</dd>
@@ -16,7 +16,7 @@
 <p>In order to get discord app tokens, go to discord developer website. As for discord server ids, enable developer mode in your account settings and then you can copy id of any server you're in.</p>
 
 <h2>How to use</h2>
-<p>Once you get the code running succesfully, there will be 7 commands at your disposal, , and </p>
+<p>Once you get the code running succesfully, there will be 7 commands at your disposal:</p>
 
 <h3>3 User-Level Commands</h3>
 <dl>
