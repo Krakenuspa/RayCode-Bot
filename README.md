@@ -5,7 +5,7 @@
 
 <h2>What does it do</h2>
 <p>This bot is a morse code translator but you replace the default symbols like dots and dashes with your own custom text in two different alphabets, originally meant for twitch and discord emotes.</p>
-<p>WARNING: Although the bot can decode regular morse code, since I had to include spaces between custom texts, it can't encode into regular morse cause of the extra spaces.</p>
+<p>WARNING: Although the bot can decode regular morse code, since I had to include spaces between custom texts, it can't encode into regular morse (or anything that includes spaces)</p>
 
 <h2>How to setup</h2>
 <p>Download all files from this git repo and place them wherever you want (in one folder). This repo doesn't include very important file which is "data.env.secret" which you have to make yourself. this file includes 4 env variables that you will need to make this bot run:</p>
