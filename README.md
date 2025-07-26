@@ -5,7 +5,7 @@
 <p>WARNING: Although the bot can decode regular morse code, since I had to include spaces between custom texts, it can't encode into regular morse cause of the extra spaces.</p>
 
 ## How to use
-<p>This git repo doesn't include very important file which is "data.env.secret" this file includes 4 env variables that you will need to make this bot run:</p>
+<p>This git repo doesn't include very important file which is "data.env.secret" which you have to make yourself. this file includes 4 env variables that you will need to make this bot run</p>
 <dl>
   <dt>TOKEN_STABLE</dt><dd>TOKEN_STABLE is token for your discord bot, make sure to never show this to anyone you don't trust since it can be used to make your bot run any code</dd>
   <dt>TOKEN_DEBUG</dt><dd>TOKEN_DEBUG is same as TOKEN_STABLE but this one is used if you enable DEBUG variable inside the main.py file, mostly used to test changes.</dd>
