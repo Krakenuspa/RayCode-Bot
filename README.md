@@ -17,12 +17,14 @@
 
 <h2>How to use</h2>
 <p>Once you get the code running succesfully, there will be 7 commands at your disposal, , and </p>
+
 <h3>3 User-Level Commands</h3>
 <dl>
   <dt>/encode_discord</dt><dd>Encodes given message using custom morse alphabet intended for DISCORD</dd>
   <dt>/encode_twitch</dt><dd>Encodes given message using custom morse alphabet intended for TWITCH</dd>
   <dt>/decode</dt><dd>Decodes a message from ALL: discord morse, twitch morse, and regular morse</dd>
 </dl>
+
 <h3>4 Admin-Level Commands</h3>
 <p>NOTE: The change commmands have two variables except the new symbol, twitch and discord, only those alphabets set to True will be updated. The new symbols can't include a space.</p>
 <p>WARNING: Make sure to restrict this bot's change cmds otherwise anyone on your server could mess with those.</p>
