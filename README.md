@@ -36,4 +36,4 @@
 </dl>
 
 <h2>Origin</h2>
-<p>Got a sudden realization that emotes could be used for communication and in excitement wrote this bot. This was a brief passion project was original designed for weathergirlray who you can find at https://www.twitch.tv/weathergirlray</p>
+<p>Got a sudden realization that emotes could be used for communication and in excitement wrote this bot. This was a brief passion project originally designed for weathergirlray who you can find at https://www.twitch.tv/weathergirlray</p>
