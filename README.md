@@ -1,7 +1,7 @@
 <h1>RayCode Discord Bot</h1>
 
 <h2>What does it do</h2>
-<p>This bot is a morse code translator but you replace the default symbols like dots and dashes with your own custom text (i.e. discord/twitch emotes).</p>
+<p>This bot is a morse code translator but you replace the default symbols like dots and dashes with your own custom text in two different alphabets, originally meant for twitch and discord emotes.</p>
 <p>WARNING: Although the bot can decode regular morse code, since I had to include spaces between custom texts, it can't encode into regular morse cause of the extra spaces.</p>
 
 <h2>How to setup</h2>
